@@ -5,6 +5,8 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
+
+	bpferrors "gobpftool/pkg/errors"
 )
 
 // Version information - can be set at build time using ldflags
@@ -85,4 +87,34 @@ func GetRootCmd() *cobra.Command {
 func ResetFlags() {
 	globalFlags = GlobalFlags{}
 	showVersion = false
+}
+
+// handleError writes a formatted error message to stderr.
+// It detects common error types (permission, BPF filesystem) and provides
+// helpful guidance to the user.
+func handleError(err error, context string) {
+	if err == nil {
+		return
+	}
+
+	// Check for permission errors first
+	if bpferrors.IsPermissionError(err) {
+		fmt.Fprintln(os.Stderr, bpferrors.FormatPermissionError())
+		return
+	}
+
+	// Check for BPF filesystem issues
+	if bpferrors.IsBpfFSNotMounted() {
+		fmt.Fprintln(os.Stderr, bpferrors.FormatBpfFSError())
+		return
+	}
+
+	// Check for specific error types
+	if bpferrors.IsNoMoreKeysError(err) {
+		fmt.Fprintln(os.Stderr, "Error: no more keys")
+		return
+	}
+
+	// Default error formatting
+	fmt.Fprintf(os.Stderr, "Error %s: %v\n", context, err)
 }

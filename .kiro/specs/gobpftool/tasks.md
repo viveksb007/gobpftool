@@ -71,21 +71,21 @@
     - Show available commands and options
     - _Requirements: 3.1, 3.2, 3.3_
 
-- [ ] 6. Implement hex utilities
+- [x] 6. Implement hex utilities
   - Create `internal/utils/hex.go` with hex parsing functions
   - Parse space-separated hex bytes to byte slice
   - Format byte slice to hex string output
   - Write unit tests for parsing and formatting
   - _Requirements: 6.3, 6.5_
 
-- [ ] 7. Implement map service
-  - [ ] 7.1 Create map service interface in `pkg/maps/service.go`
+- [x] 7. Implement map service
+  - [x] 7.1 Create map service interface in `pkg/maps/service.go`
     - Define `MapInfo` struct with all required fields
     - Define `MapEntry` struct for key-value pairs
     - Define `Service` interface with List, GetByID, GetByName, GetByPinnedPath, Dump, Lookup, GetNextKey
     - _Requirements: 4.1, 4.7_
 
-  - [ ] 7.2 Implement map service using cilium/ebpf in `pkg/maps/service_impl.go`
+  - [x] 7.2 Implement map service using cilium/ebpf in `pkg/maps/service_impl.go`
     - Implement `List()` using `ebpf.MapIterator`
     - Implement `GetByID()` using `ebpf.NewMapFromID`
     - Implement `GetByName()` by filtering list results
@@ -96,13 +96,13 @@
     - Write unit tests
     - _Requirements: 4.1, 4.3, 4.4, 4.5, 4.6, 4.7, 5.1, 5.2, 5.3, 5.4, 5.5, 5.6, 6.1, 6.2, 6.3, 6.4, 6.5, 7.1, 7.2, 7.3, 7.4, 7.5_
 
-- [ ] 8. Implement map commands
-  - [ ] 8.1 Create map command structure in `cmd/map.go`
+- [x] 8. Implement map commands
+  - [x] 8.1 Create map command structure in `cmd/map.go`
     - Create `map` parent command
     - Wire up to root command
     - _Requirements: 1.1_
 
-  - [ ] 8.2 Implement `map show` command
+  - [x] 8.2 Implement `map show` command
     - Parse map identifier (id, name, pinned)
     - Call map service to get map info
     - Format output using formatter
@@ -110,14 +110,14 @@
     - Support `list` alias
     - _Requirements: 4.1, 4.2, 4.3, 4.4, 4.5, 4.6, 4.7_
 
-  - [ ] 8.3 Implement `map dump` command
+  - [x] 8.3 Implement `map dump` command
     - Parse map identifier
     - Call map service Dump method
     - Format all entries using formatter
     - Display element count
     - _Requirements: 5.1, 5.2, 5.3, 5.4, 5.5, 5.6_
 
-  - [ ] 8.4 Implement `map lookup` command
+  - [x] 8.4 Implement `map lookup` command
     - Parse map identifier and key data
     - Parse hex key bytes using utils
     - Call map service Lookup method
@@ -125,7 +125,7 @@
     - Handle key not found error
     - _Requirements: 6.1, 6.2, 6.3, 6.4, 6.5_
 
-  - [ ] 8.5 Implement `map getnext` command
+  - [x] 8.5 Implement `map getnext` command
     - Parse map identifier and optional key data
     - Call map service GetNextKey method
     - Format result showing current and next key
@@ -133,12 +133,12 @@
     - Handle empty map case
     - _Requirements: 7.1, 7.2, 7.3, 7.4, 7.5_
 
-  - [ ] 8.6 Implement `map help` command
+  - [x] 8.6 Implement `map help` command
     - Display help for map subcommands
     - Show available commands and options
     - _Requirements: 8.1, 8.2, 8.3_
 
-- [ ] 9. Implement error handling
+- [x] 9. Implement error handling
   - Create error types in `pkg/errors/errors.go`
   - Implement permission error detection and messaging
   - Implement BPF filesystem mount detection

@@ -7,6 +7,7 @@ import (
 
 	"github.com/spf13/cobra"
 
+	bpferrors "gobpftool/pkg/errors"
 	"gobpftool/pkg/output"
 	"gobpftool/pkg/prog"
 )
@@ -58,7 +59,7 @@ func runProgShow(cmd *cobra.Command, args []string) error {
 		// List all programs
 		programs, err = progService.List()
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "Error listing programs: %v\n", err)
+			handleError(err, "listing programs")
 			return err
 		}
 	} else if len(args) >= 2 {
@@ -70,13 +71,13 @@ func runProgShow(cmd *cobra.Command, args []string) error {
 		case "id":
 			id, parseErr := strconv.ParseUint(value, 10, 32)
 			if parseErr != nil {
-				fmt.Fprintf(os.Stderr, "Invalid program ID: %s\n", value)
-				return parseErr
+				fmt.Fprintf(os.Stderr, "Error: invalid program ID: %s\n", value)
+				return bpferrors.ErrInvalidID
 			}
 
 			program, getErr := progService.GetByID(uint32(id))
 			if getErr != nil {
-				fmt.Fprintf(os.Stderr, "Error getting program by ID: %v\n", getErr)
+				handleError(getErr, fmt.Sprintf("getting program with ID %d", id))
 				return getErr
 			}
 			programs = []prog.ProgramInfo{*program}
@@ -84,31 +85,31 @@ func runProgShow(cmd *cobra.Command, args []string) error {
 		case "tag":
 			programs, err = progService.GetByTag(value)
 			if err != nil {
-				fmt.Fprintf(os.Stderr, "Error getting programs by tag: %v\n", err)
+				handleError(err, fmt.Sprintf("getting programs with tag %s", value))
 				return err
 			}
 
 		case "name":
 			programs, err = progService.GetByName(value)
 			if err != nil {
-				fmt.Fprintf(os.Stderr, "Error getting programs by name: %v\n", err)
+				handleError(err, fmt.Sprintf("getting programs with name %s", value))
 				return err
 			}
 
 		case "pinned":
 			program, getErr := progService.GetByPinnedPath(value)
 			if getErr != nil {
-				fmt.Fprintf(os.Stderr, "Error getting pinned program: %v\n", getErr)
+				handleError(getErr, fmt.Sprintf("getting pinned program at %s", value))
 				return getErr
 			}
 			programs = []prog.ProgramInfo{*program}
 
 		default:
-			fmt.Fprintf(os.Stderr, "Invalid program identifier: %s. Use 'id', 'tag', 'name', or 'pinned'\n", identifier)
+			fmt.Fprintf(os.Stderr, "Error: invalid program identifier: %s. Use 'id', 'tag', 'name', or 'pinned'\n", identifier)
 			return fmt.Errorf("invalid identifier: %s", identifier)
 		}
 	} else {
-		fmt.Fprintf(os.Stderr, "Invalid arguments. Use 'gobpftool prog show' or 'gobpftool prog show <identifier> <value>'\n")
+		fmt.Fprintf(os.Stderr, "Error: invalid arguments. Use 'gobpftool prog show' or 'gobpftool prog show <identifier> <value>'\n")
 		return fmt.Errorf("invalid arguments")
 	}
 
