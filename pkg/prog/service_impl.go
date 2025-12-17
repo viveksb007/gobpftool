@@ -21,12 +21,19 @@ func (s *EBPFService) List() ([]ProgramInfo, error) {
 	var programs []ProgramInfo
 
 	var id ebpf.ProgramID
+	firstIteration := true
+
 	for {
 		nextID, err := ebpf.ProgramGetNextID(id)
 		if err != nil {
-			// No more programs
+			// If this is the first iteration and we get an error, it's likely a permission issue
+			if firstIteration {
+				return nil, fmt.Errorf("failed to list programs: %w", err)
+			}
+			// Otherwise, no more programs
 			break
 		}
+		firstIteration = false
 		id = nextID
 
 		prog, err := ebpf.NewProgramFromID(id)

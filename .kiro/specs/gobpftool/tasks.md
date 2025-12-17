@@ -52,13 +52,13 @@
     - Write unit tests (mock-based for interface, integration for real eBPF)
     - _Requirements: 2.1, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8_
 
-- [ ] 5. Implement prog commands
-  - [ ] 5.1 Create prog command structure in `cmd/prog.go`
+- [x] 5. Implement prog commands
+  - [x] 5.1 Create prog command structure in `cmd/prog.go`
     - Create `prog` parent command
     - Wire up to root command
     - _Requirements: 1.1_
 
-  - [ ] 5.2 Implement `prog show` command
+  - [x] 5.2 Implement `prog show` command
     - Parse program identifier (id, tag, name, pinned)
     - Call program service to get program info
     - Format output using formatter
@@ -66,7 +66,7 @@
     - Support `list` alias
     - _Requirements: 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7_
 
-  - [ ] 5.3 Implement `prog help` command
+  - [x] 5.3 Implement `prog help` command
     - Display help for prog subcommands
     - Show available commands and options
     - _Requirements: 3.1, 3.2, 3.3_
