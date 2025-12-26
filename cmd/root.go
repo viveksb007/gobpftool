@@ -34,7 +34,7 @@ the Linux bpftool utility for inspecting eBPF programs and maps.
 It uses the cilium/ebpf library to interact with the kernel's eBPF subsystem.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if showVersion {
-			printVersion()
+			printVersionInfo()
 			return
 		}
 		// If no subcommand is provided, show help
@@ -58,17 +58,6 @@ func init() {
 // GetGlobalFlags returns the global flags
 func GetGlobalFlags() GlobalFlags {
 	return globalFlags
-}
-
-// printVersion prints the version information
-func printVersion() {
-	fmt.Fprintf(os.Stdout, "gobpftool version %s\n", Version)
-	if GitCommit != "unknown" {
-		fmt.Fprintf(os.Stdout, "  git commit: %s\n", GitCommit)
-	}
-	if BuildDate != "unknown" {
-		fmt.Fprintf(os.Stdout, "  build date: %s\n", BuildDate)
-	}
 }
 
 // SetVersionInfo allows setting version info programmatically (useful for testing)

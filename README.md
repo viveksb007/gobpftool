@@ -4,8 +4,10 @@ A Go-based CLI tool for inspecting eBPF programs and maps, similar to Linux `bpf
 
 ## Installation
 
+### Build from source
+
 ```bash
-go build -o gobpftool main.go
+make build
 ```
 
 ## Usage

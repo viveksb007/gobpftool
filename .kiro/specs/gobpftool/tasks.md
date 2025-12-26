@@ -146,7 +146,7 @@
   - Write error messages to stderr
   - _Requirements: 10.1, 10.2, 10.3, 10.4, 10.5_
 
-- [ ] 10. Add version command
+- [x] 10. Add version command
   - Create `cmd/version.go`
   - Display version information
   - Support `--version` flag on root command
