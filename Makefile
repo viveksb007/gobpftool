@@ -50,6 +50,11 @@ test-coverage:
 	$(GOTEST) -v -coverprofile=coverage.out ./...
 	$(GOCMD) tool cover -html=coverage.out -o coverage.html
 
+# Run integration tests (requires Docker)
+.PHONY: integration-test
+integration-test:
+	./integration_test/run_test.sh
+
 # Download dependencies
 .PHONY: deps
 deps:
@@ -77,6 +82,7 @@ help:
 	@echo "  clean         - Clean build artifacts"
 	@echo "  test          - Run tests"
 	@echo "  test-coverage - Run tests with coverage report"
+	@echo "  integration-test - Run integration tests (requires Docker)"
 	@echo "  deps          - Download and tidy dependencies"
 	@echo "  install       - Install binary to /usr/local/bin"
 	@echo "  version-info  - Show version info that would be embedded"
