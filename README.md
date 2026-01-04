@@ -18,6 +18,10 @@ Most commands require root privileges to access eBPF subsystem.
 
 ### Program Commands
 
+![Program Show](docs/prog_show.png)
+
+
+
 ```bash
 # List all loaded programs
 sudo ./gobpftool prog show
@@ -36,6 +40,8 @@ sudo ./gobpftool prog show pinned /sys/fs/bpf/my_prog
 ```
 
 ### Map Commands
+
+![Map Show](docs/map_show.png)
 
 ```bash
 # List all loaded maps
