@@ -1,5 +1,7 @@
 # gobpftool
 
+[![Build](https://github.com/viveksb007/gobpftool/actions/workflows/build.yml/badge.svg)](https://github.com/viveksb007/gobpftool/actions/workflows/build.yml)
+
 A Go-based CLI tool for inspecting eBPF programs and maps, similar to Linux `bpftool`.
 
 ## Installation
