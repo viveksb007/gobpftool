@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"gobpftool/cmd"
+	"github.com/viveksb007/gobpftool/cmd"
 )
 
 func main() {

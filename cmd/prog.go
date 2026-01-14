@@ -7,9 +7,9 @@ import (
 
 	"github.com/spf13/cobra"
 
-	bpferrors "gobpftool/pkg/errors"
-	"gobpftool/pkg/output"
-	"gobpftool/pkg/prog"
+	bpferrors "github.com/viveksb007/gobpftool/pkg/errors"
+	"github.com/viveksb007/gobpftool/pkg/output"
+	"github.com/viveksb007/gobpftool/pkg/prog"
 )
 
 var progService prog.Service

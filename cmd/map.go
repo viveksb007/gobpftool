@@ -8,10 +8,10 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"gobpftool/internal/utils"
-	bpferrors "gobpftool/pkg/errors"
-	"gobpftool/pkg/maps"
-	"gobpftool/pkg/output"
+	"github.com/viveksb007/gobpftool/internal/utils"
+	bpferrors "github.com/viveksb007/gobpftool/pkg/errors"
+	"github.com/viveksb007/gobpftool/pkg/maps"
+	"github.com/viveksb007/gobpftool/pkg/output"
 )
 
 var mapService maps.Service

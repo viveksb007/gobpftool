@@ -6,7 +6,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	bpferrors "gobpftool/pkg/errors"
+	bpferrors "github.com/viveksb007/gobpftool/pkg/errors"
 )
 
 // Version information - can be set at build time using ldflags
