@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/cilium/ebpf"
+	"github.com/viveksb007/gobpftool/internal/bpffs"
 )
 
 // EBPFService implements the Service interface using cilium/ebpf.
@@ -22,6 +23,9 @@ func (s *EBPFService) List() ([]ProgramInfo, error) {
 
 	var id ebpf.ProgramID
 	firstIteration := true
+
+	// Get the scanner for pinned paths
+	scanner := bpffs.GetScanner()
 
 	for {
 		nextID, err := ebpf.ProgramGetNextID(id)
@@ -48,6 +52,9 @@ func (s *EBPFService) List() ([]ProgramInfo, error) {
 			continue
 		}
 
+		// Add pinned paths
+		info.PinnedPaths = scanner.GetProgramPinnedPaths(info.ID)
+
 		programs = append(programs, *info)
 	}
 
@@ -65,7 +72,16 @@ func (s *EBPFService) GetByID(id uint32) (*ProgramInfo, error) {
 	}
 	defer prog.Close()
 
-	return extractProgramInfo(prog)
+	info, err := extractProgramInfo(prog)
+	if err != nil {
+		return nil, err
+	}
+
+	// Add pinned paths
+	scanner := bpffs.GetScanner()
+	info.PinnedPaths = scanner.GetProgramPinnedPaths(info.ID)
+
+	return info, nil
 }
 
 // GetByTag returns programs matching the tag.

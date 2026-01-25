@@ -16,6 +16,8 @@ type MapInfo struct {
 	MemLock    uint32    `json:"bytes_memlock"`
 	LoadedAt   time.Time `json:"loaded_at,omitempty"`
 	UID        uint32    `json:"uid,omitempty"`
+	// PinnedPaths contains the paths where this map is pinned in bpffs.
+	PinnedPaths []string `json:"pinned_paths,omitempty"`
 }
 
 // MapEntry represents a key-value pair in an eBPF map

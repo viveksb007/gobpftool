@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	"github.com/cilium/ebpf"
+	"github.com/viveksb007/gobpftool/internal/bpffs"
 )
 
 // serviceImpl implements the Service interface using cilium/ebpf
@@ -21,6 +22,9 @@ func (s *serviceImpl) List() ([]MapInfo, error) {
 
 	var id ebpf.MapID
 	firstIteration := true
+
+	// Get the scanner for pinned paths
+	scanner := bpffs.GetScanner()
 
 	for {
 		nextID, err := ebpf.MapGetNextID(id)
@@ -47,6 +51,9 @@ func (s *serviceImpl) List() ([]MapInfo, error) {
 			continue
 		}
 
+		// Add pinned paths
+		mapInfo.PinnedPaths = scanner.GetMapPinnedPaths(mapInfo.ID)
+
 		maps = append(maps, *mapInfo)
 	}
 
@@ -61,7 +68,16 @@ func (s *serviceImpl) GetByID(id uint32) (*MapInfo, error) {
 	}
 	defer m.Close()
 
-	return s.mapToMapInfo(m)
+	mapInfo, err := s.mapToMapInfo(m)
+	if err != nil {
+		return nil, err
+	}
+
+	// Add pinned paths
+	scanner := bpffs.GetScanner()
+	mapInfo.PinnedPaths = scanner.GetMapPinnedPaths(mapInfo.ID)
+
+	return mapInfo, nil
 }
 
 // GetByName returns maps matching the name

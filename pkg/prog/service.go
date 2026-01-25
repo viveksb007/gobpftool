@@ -27,6 +27,8 @@ type ProgramInfo struct {
 	MemLock uint32
 	// MapIDs is the list of map IDs associated with this program.
 	MapIDs []uint32
+	// PinnedPaths contains the paths where this program is pinned in bpffs.
+	PinnedPaths []string `json:"pinned_paths,omitempty"`
 }
 
 // Service defines the interface for inspecting eBPF programs.
