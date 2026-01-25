@@ -1,0 +1,51 @@
+version: 2
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - id: gobpftool
+    main: .
+    binary: gobpftool
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+    goarch:
+      - amd64
+      - arm64
+    ldflags:
+      - -s -w -X github.com/viveksb007/gobpftool/cmd.Version={{.Version}} -X github.com/viveksb007/gobpftool/cmd.GitCommit={{.Commit}}
+
+archives:
+  - id: gobpftool
+    formats:
+      - tar.gz
+    name_template: "gobpftool_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+
+checksum:
+  name_template: 'checksums.txt'
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+      - '^chore:'
+
+brews:
+  - name: gobpftool
+    repository:
+      owner: viveksb007
+      name: homebrew-tap
+      token: "{{ .Env.HOMEBREW_TAP_TOKEN }}"
+    directory: Formula
+    homepage: "https://github.com/viveksb007/gobpftool"
+    description: "A Go-based CLI tool for inspecting eBPF programs and maps"
+    license: "MIT"
+    install: |
+      bin.install "gobpftool"
+    test: |
+      system "#{bin}/gobpftool", "--version"
