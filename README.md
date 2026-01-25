@@ -6,6 +6,17 @@ A Go-based CLI tool for inspecting eBPF programs and maps, similar to Linux `bpf
 
 ## Installation
 
+### Homebrew (Linux)
+
+```bash
+brew tap viveksb007/tap
+brew install gobpftool
+```
+
+### Download Binary
+
+Download the latest release from the [releases page](https://github.com/viveksb007/gobpftool/releases).
+
 ### Build from source
 
 ```bash
